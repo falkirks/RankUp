@@ -8,13 +8,13 @@
 #  $$ |  $$ |$$    $$ |$$ |  $$ |$$ | $$  |$$    $$/ $$    $$/
 #  $$/   $$/  $$$$$$$/ $$/   $$/ $$/   $$/  $$$$$$/  $$$$$$$/
 #                                                    $$ |
-#                                                    $$ |
+#  The easy prison rankup plugin for PocketMine-MP   $$ |
 #                                                    $$/
-# The easy prison rankup plugin for PocketMine-MP
+
 unleash-the-rankupdoesgroups: true
   # If you set this to false RankUpDoesGroups won't be loaded.
   # This means that you can't set it as your groupmanager.
-  # It is highly recommended not to change this.
+  # It is highly recommended not to change th
 preferred-economy: "rankup\\economy\\Economy"
   # Set your preferred economy
   # rankup\\economy\\Economy and rankup\\economy\\PocketMoney are available by default

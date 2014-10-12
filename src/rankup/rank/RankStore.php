@@ -1,6 +1,7 @@
 <?php
 namespace rankup\rank;
 
+use pocketmine\Player;
 use rankup\RankUp;
 
 class RankStore{
@@ -19,11 +20,39 @@ class RankStore{
         }
         $this->getMain()->getLogger()->info("Loaded " . count($this->ranks) . " ranks.");
     }
-
+    public function getRankByName($name){
+        foreach($this->ranks as $rank){
+            if($rank->getName() === $name){
+                return $rank;
+            }
+        }
+        return false;
+    }
     /**
      * @return \rankup\RankUp
      */
     public function getMain(){
         return $this->main;
+    }
+    public function getNextRank(Player $player){
+        //TODO check if perm is linked
+        $group = $this->getMain()->getPermManager()->getGroup($player);
+        if($group !== false){
+            $rank = $this->getRankByName($group);
+            if($rank !== false){
+                if($rank->getOrder() == count($this->ranks)-1){
+                    return false;
+                }
+                else{
+                    return $this->ranks[$rank->getOrder()+1];
+                }
+            }
+            else{
+                return $this->ranks[0];
+            }
+        }
+        else{
+            return $this->ranks[0];
+        }
     }
 }
