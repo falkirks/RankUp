@@ -1,27 +1,33 @@
 <?php
 namespace rankup\permission;
 use pocketmine\Player;
-use rankup\doesgroups\RankUpDoesGroups as DoesGroups;
 
 class RankUpDoesGroups extends BasePermissionManager{
     public function addToGroup(Player $player, $group){
-        // TODO: Implement addToGroup() method.
+        if(!$this->checkReady()) return false;
+        return $this->getAPI()->setPlayerGroup($player, $group);
     }
 
     public function getGroup(Player $player){
-        // TODO: Implement getGroup() method.
+        if(!$this->checkReady()) return false;
+        return $this->getAPI()->getPlayerGroup($player);
+    }
+
+    public function getPlayersInGroup($name){
+        if(!$this->checkReady()) return false;
+        //TODO limit to players
+        return $this->getAPI()->getGroup($name)->getMembers();
     }
 
     public function getAPI(){
-        // TODO: Implement getAPI() method.
+        return $this->getPlugin()->getRankUpDoesGroups();
     }
 
     public function isReady(){
-        // TODO: Implement isReady() method.
+        return $this->getPlugin()->isDoesGroupsLoaded();
     }
 
     public function getName(){
         return "RankUpDoesGroups by Falk";
     }
-
 }

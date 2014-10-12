@@ -25,6 +25,5 @@ class Economy extends BaseEconomy{
     }
     public function getName(){
         return "EconomyS by onebone";
-
     }
 }

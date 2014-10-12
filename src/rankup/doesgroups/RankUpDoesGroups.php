@@ -26,6 +26,7 @@ class RankUpDoesGroups{
         if(isset($this->groups[$group])){
             $this->removeGroups($player);
             $this->groups[$group]->addMember($player);
+            return true;
         }
         else{
             return false;

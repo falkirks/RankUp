@@ -14,6 +14,7 @@ abstract class BasePermissionManager{
     }
     public abstract function addToGroup(Player $player, $group);
     public abstract function getGroup(Player $player);
+    public abstract function getPlayersInGroup($name);
     public abstract function getAPI();
     public abstract function isReady();
     public abstract function getName();

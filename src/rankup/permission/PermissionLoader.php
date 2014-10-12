@@ -15,7 +15,7 @@ class PermissionLoader{
                 $permManager = new $name($this->plugin);
                 if($permManager instanceof BasePermissionManager){
                     if($permManager->isReady()){
-                        $this->plugin->set($permManager);
+                        $this->plugin->setPermManager($permManager);
                         $this->plugin->getLogger()->info("Loaded " . $permManager->getName());
                     }
                     else{
