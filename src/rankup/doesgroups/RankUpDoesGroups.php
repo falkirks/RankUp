@@ -34,11 +34,12 @@ class RankUpDoesGroups{
     }
 
     public function getPlayerGroup(Permissible $player){
-        foreach($this->groups as $group){
+        foreach($this->groups as $name => $group){
             if($group->isMember($player)){
-                return $group;
+                return $name;
             }
         }
+        return false;
     }
 
     public function getGroup($name){
