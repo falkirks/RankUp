@@ -1,5 +1,5 @@
 <?php
-namespace battlekits\command;
+namespace rankup\command;
 
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
