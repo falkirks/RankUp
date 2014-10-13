@@ -17,17 +17,42 @@ class RankUpCommand extends Command implements PluginIdentifiableCommand{
         if($sender instanceof Player && count($args) == 0 || !$sender->hasPermission("rankup.admin")){
             if($sender->hasPermission("rankup.rankup")){
                 $nextRank = $this->getPlugin()->getRankStore()->getNextRank($sender);
+                $sender->sendMessage($nextRank->getName());
                 if($nextRank !== false){
                     if($nextRank->getPrice() == 0 || $this->getPlugin()->isLinkedToEconomy()){
                         if($nextRank->getPrice() > 0){
-                            $this->getPlugin()->getEconomy()->take($nextRank->getPrice(), $sender);
+                            if($this->getPlugin()->getEconomy()->take($nextRank->getPrice(), $sender) !== false){
+                                if($this->getPlugin()->getPermManager()->addToGroup($sender, $nextRank->getName()) !== false){
+                                    //TODO add to lang
+                                    $sender->sendMessage("You have been ranked up to " . $nextRank->getName());
+                                }
+                                else{
+                                    //TODO add to lang
+                                    $sender->sendMessage("Failed to rankup. Refunded price.");
+                                    $this->getPlugin()->getEconomy()->give($nextRank->getPrice(), $sender);
+                                }
+                            }
+                            else{
+                                //TODO add to lang and X/Y
+                                $sender->sendMessage("Looks like you don't have enough money.");
+                            }
+                        }
+                        else{
+                            if($this->getPlugin()->getPermManager()->addToGroup($sender, $nextRank->getName()) !== false){
+                                //TODO add to lang
+                                $sender->sendMessage("You have been ranked up to " . $nextRank->getName());
+                            }
+                            else{
+                                //TODO add to lang
+                                $sender->sendMessage("Failed to rankup. Try again later.");
+                            }
                         }
                     }
                     else{
                         //TODO add to lang
                         $sender->sendMessage("Can't purchase now.");
                     }
-                }
+                 }
                 else{
                     //TODO add to lang
                     $sender->sendMessage("You have the maximum rank.");

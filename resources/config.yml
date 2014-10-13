@@ -25,7 +25,7 @@ preferred-groupmanager: "rankup\\permission\\RankUpDoesGroups"
   # RankUpDoesGroups is a super barebones alternative for users who don't use xPerms
 
 ranks: # Define your ranks here
-  A: 10
-  B: 15
-  C: 30
+  A: 0
+  B: 0
+  C: 15
   D: 50

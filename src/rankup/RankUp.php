@@ -2,6 +2,7 @@
 namespace rankup;
 
 use pocketmine\utils\Config;
+use rankup\command\RankUpCommand;
 use rankup\doesgroups\RankUpDoesGroups;
 use rankup\economy\BaseEconomy;
 use rankup\economy\EconomyLoader;
@@ -23,6 +24,8 @@ class RankUp extends PluginBase{
     private $economy = false;
     /** @var  RankStore */
     private $rankStore;
+    /** @var  RankUpCommand */
+    private $rankupCommand;
     public function onEnable(){
         $this->saveDefaultConfig();
 
@@ -36,6 +39,9 @@ class RankUp extends PluginBase{
 
         $this->rankStore = new RankStore($this);
         $this->rankStore->loadFromConfig();
+
+        $this->rankupCommand = new RankUpCommand($this);
+        $this->getServer()->getCommandMap()->register("rankup", $this->rankupCommand);
     }
 
     /**

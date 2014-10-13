@@ -3,6 +3,7 @@ namespace rankup\doesgroups;
 
 use pocketmine\permission\Permissible;
 use pocketmine\permission\Permission;
+use pocketmine\Player;
 use pocketmine\Server;
 use pocketmine\utils\Config;
 
@@ -22,7 +23,7 @@ class RankUpDoesGroups{
         $this->groups = [];
         $this->initPermissions();
     }
-    public function setPlayerGroup(Permissible $player, $group){
+    public function setPlayerGroup(Player $player, $group){
         if(isset($this->groups[$group])){
             $this->removeGroups($player);
             $this->groups[$group]->addMember($player);
@@ -33,7 +34,7 @@ class RankUpDoesGroups{
         }
     }
 
-    public function getPlayerGroup(Permissible $player){
+    public function getPlayerGroup(Player $player){
         foreach($this->groups as $name => $group){
             if($group->isMember($player)){
                 return $name;
@@ -45,19 +46,16 @@ class RankUpDoesGroups{
     public function getGroup($name){
         return (isset($this->groups[$name]) ? $this->groups[$name] : false);
     }
-    public function removeGroups(Permissible $permissible){
+    public function removeGroups(Player $player){
         foreach($this->groups as $group){
-            if($group->isMember($permissible)){
-                $group->removeMember($permissible);
+            if($group->isMember($player)){
+                $group->removeMember($player);
             }
         }
     }
 
     public function initPermissions(){
         foreach($this->config->get('groups') as $name => $groupData){
-            $perm = new Permission($this->getGroupPermission()->getName() . ".$name", "Apply $name kit");
-            $perm->addParent($this->getGroupPermission(), true);
-            $this->getServer()->getPluginManager()->addPermission($perm);
             $perms = [];
             foreach($groupData['perms'] as $str){
                 $str = $this->getServer()->getPluginManager()->getPermission($str);
@@ -65,8 +63,18 @@ class RankUpDoesGroups{
                     $perms[] = $str;
                 }
             }
-            $this->groups[$name] = new Group($this, $perm, $perms, $groupData['entrance'], $groupData['exit']);
+            $this->groups[$name] = new Group($this, $name, $perms, $groupData['entrance'], $groupData['exit'], $groupData['members']);
         }
+    }
+    /*
+     * Do NOT use this function
+     */
+    public function saveMembers(){
+        $arr = $this->getConfig()->getAll();
+        foreach($this->groups as $name => $group){
+            $arr['groups'][$name]['members'] = $group->getMembers();
+        }
+        $this->getConfig()->setAll($arr);
     }
     /**
      * @return \pocketmine\utils\Config

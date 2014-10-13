@@ -16,7 +16,7 @@ class RankStore{
     public function loadFromConfig(){
         $this->ranks = [];
         foreach($this->getMain()->getConfig()->get('ranks') as $name => $price){
-            $this->ranks[] = new Rank($name, $price, count($this->ranks));
+            $this->ranks[] = new Rank($name,count($this->ranks), $price);
         }
         $this->getMain()->getLogger()->info("Loaded " . count($this->ranks) . " ranks.");
     }

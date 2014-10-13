@@ -15,47 +15,48 @@ class Group{
     private $permsToSet;
     private $entrance;
     private $exit;
-    public function __construct(RankUpDoesGroups $main, Permission $perm, $perms, $entrance, $exit){
+    public function __construct(RankUpDoesGroups $main, $name, $perms, $entrance, $exit, $members){
         $this->main = $main;
-        $this->perm = $perm;
+        $this->name = $name;
         $this->permsToSet = $perms;
         $this->entrance = $entrance;
         $this->exit = $exit;
-        $this->initChildren();
+        $this->members = $members;
     }
-    /**
-     * @return \pocketmine\permission\Permissible[]
-     */
     public function getMembers(){
-        return $this->getPerm()->getPermissibles();
+        return $this->members;
     }
-    public function addMember(Permissible $permissible){
-        $attachment = $permissible->addAttachment($this->getMain()->getServer()->getPluginManager()->getPlugin("RankUp"));
-        $attachment->setPermission($this->perm, true);
-        $permissible->removeAttachment($attachment);
-        if($permissible instanceof Player){
-            foreach($this->entrance as $cmd){
-                $this->getMain()->getServer()->dispatchCommand(new ConsoleCommandSender(), str_replace("{name}", $permissible->getName(), $cmd));
-            }
+    public function addMember(Player $player){
+        $this->members[] = $player->getName();
+        $this->getMain()->saveMembers();
+        $attachment = $player->addAttachment($this->getMain()->getServer()->getPluginManager()->getPlugin("RankUp"));
+        foreach($this->permsToSet as $permToSet){
+            $attachment->setPermission($permToSet, true);
+        }
+        $player->removeAttachment($attachment);
+        foreach($this->entrance as $cmd){
+            $this->getMain()->getServer()->dispatchCommand(new ConsoleCommandSender(), str_replace("{name}", $player->getName(), $cmd));
         }
     }
-    public function removeMember(Permissible $permissible){
-        $attachment = $permissible->addAttachment($this->getMain()->getServer()->getPluginManager()->getPlugin("RankUp"));
-        $attachment->unsetPermission($this->perm);
-        $permissible->removeAttachment($attachment);
-        if($permissible instanceof Player){
+    public function removeMember(Player $player){
+        if(in_array($player->getName(), $this->members)){
+            unset($this->members[array_search($player->getName(), $this->members)]);
+            $this->getMain()->saveMembers();
+            $attachment = $player->addAttachment($this->getMain()->getServer()->getPluginManager()->getPlugin("RankUp"));
+            foreach($this->permsToSet as $permToSet){
+                $attachment->unsetPermission($permToSet);
+            }
+            $player->removeAttachment($attachment);
             foreach($this->exit as $cmd){
-                $this->getMain()->getServer()->dispatchCommand(new ConsoleCommandSender(), str_replace("{name}", $permissible->getName(), $cmd));
+                $this->getMain()->getServer()->dispatchCommand(new ConsoleCommandSender(), str_replace("{name}", $player->getName(), $cmd));
             }
         }
-    }
-    public function isMember(Permissible $permissible){
-        return $permissible->hasPermission($this->perm);
-    }
-    public function initChildren(){
-        foreach($this->permsToSet as $permToChild){
-            $permToChild->addParent($this->perm, true);
+        else{
+            return false;
         }
+    }
+    public function isMember(Player $player){
+        return in_array($player->getName(), $this->members);
     }
     /**
      * @return mixed
