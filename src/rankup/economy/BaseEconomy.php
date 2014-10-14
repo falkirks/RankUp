@@ -15,6 +15,7 @@ abstract class BaseEconomy{
     public abstract function give($amt, Player $player);
     public abstract function take($amt, Player $player);
     public abstract function setBal($amt, Player $player);
+    public abstract function getBal(Player $player);
     public abstract function getAPI();
     public abstract function isReady();
     public abstract function getName();

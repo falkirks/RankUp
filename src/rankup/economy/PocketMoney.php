@@ -17,6 +17,10 @@ class PocketMoney extends BaseEconomy{
         if(!$this->checkReady()) return false;
         return (!isset($this->getAPI()->setMoney($player->getName(), $amt)->description));
     }
+    public function getBal(Player $player){
+        // TODO: Implement getBal() method.
+        return 0;
+    }
     public function getAPI(){
         if(!$this->checkReady()) return false;
         return $this->getPlugin()->getServer()->getPluginManager()->getPlugin("PocketMoney");
