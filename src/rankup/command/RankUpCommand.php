@@ -6,7 +6,7 @@ use pocketmine\command\CommandSender;
 use pocketmine\command\PluginIdentifiableCommand;
 use pocketmine\Player;
 use rankup\RankUp;
-use rankup\economy; //so economy money can be read
+use rankup\economy\Economy; //so Economy money can be read
 
 class RankUpCommand extends Command implements PluginIdentifiableCommand{
     private $main;
