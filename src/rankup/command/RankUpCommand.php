@@ -37,9 +37,11 @@ class RankUpCommand extends Command implements PluginIdentifiableCommand{
                                 //TODO add to lang and X/Y
                                 $sender->sendMessage("Looks like you don't have enough money.");
                                 $username = $sender->getName();
-                                EconomyAPI::getInstance()->getAllMoney($username); //will get money from all users from EconomyAPI-onebone
-                                $userMoney = EconomyAPI::getInstance()->userMoney($username); //gets users money
-                                $sender->sendMessage("You need " . ($nextRank - $userMoney) . " to rank up."); //will send message on how much money until they rankup
+                                    if(is_dir($this->getServer()->getPluginPath()."EconomyAPI")) //Will only send message if EconomyAPI is used 
+                                    EconomyAPI::getInstance()->getAllMoney($username); //will get money from all users from EconomyAPI-onebone
+                                    $userMoney = EconomyAPI::getInstance()->userMoney($username); //gets users money
+                                    $sender->sendMessage("You need " . ($nextRank - $userMoney) . " to rank up."); //will send message on how much money until they rankup
+                                    //TODO add PocketMoney (other econmy source)
                             }
                         }
                         else{
