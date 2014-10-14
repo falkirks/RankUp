@@ -6,6 +6,7 @@ use pocketmine\command\CommandSender;
 use pocketmine\command\PluginIdentifiableCommand;
 use pocketmine\Player;
 use rankup\RankUp;
+use rankup\economy; //so economy money can be read
 
 class RankUpCommand extends Command implements PluginIdentifiableCommand{
     private $main;
@@ -35,6 +36,9 @@ class RankUpCommand extends Command implements PluginIdentifiableCommand{
                             else{
                                 //TODO add to lang and X/Y
                                 $sender->sendMessage("Looks like you don't have enough money.");
+                                EconomyAPI::getInstance()->getAllMoney($username); //will get money from all users from EconomyAPI-onebone
+                                $userMoney = EconomyAPI::getInstance()->userMoney($username); //gets users money
+                                $sender->sendMessage("You need " . ($nextRank - $userMoney) . " to rank up."); //will send message on how much money until they rankup
                             }
                         }
                         else{
