@@ -17,7 +17,7 @@ class RankUpCommand extends Command implements PluginIdentifiableCommand{
         if($sender instanceof Player && count($args) == 0 || !$sender->hasPermission("rankup.admin")){
             if($sender->hasPermission("rankup.rankup")){
                 $nextRank = $this->getPlugin()->getRankStore()->getNextRank($sender);
-                $sender->sendMessage($nextRank->getName());
+                //$sender->sendMessage($nextRank->getName());
                 if($nextRank !== false){
                     if($nextRank->getPrice() == 0 || $this->getPlugin()->isLinkedToEconomy()){
                         if($nextRank->getPrice() > 0){
