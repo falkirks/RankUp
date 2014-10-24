@@ -23,44 +23,37 @@ class RankUpCommand extends Command implements PluginIdentifiableCommand{
                         if($nextRank->getPrice() > 0){
                             if($this->getPlugin()->getEconomy()->take($nextRank->getPrice(), $sender) !== false){
                                 if($this->getPlugin()->getPermManager()->addToGroup($sender, $nextRank->getName()) !== false){
-                                    //TODO add to lang
-                                    $sender->sendMessage("You have been ranked up to " . $nextRank->getName());
+                                    $sender->sendMessage(sprintf($this->getPlugin()->getLanguageConfig()->getLangSetting('ranked-up-paid'), $nextRank->getName()));
                                 }
                                 else{
-                                    //TODO add to lang
-                                    $sender->sendMessage("Failed to rankup. Refunded price.");
+                                    $sender->sendMessage($this->getPlugin()->getLanguageConfig()->getLangSetting('group-add-error-paid'));
                                     $this->getPlugin()->getEconomy()->give($nextRank->getPrice(), $sender);
                                 }
                             }
                             else{
-                                //TODO add to lang and X/Y
-                                $sender->sendMessage("Looks like you don't have enough money.");
-                                $sender->sendMessage("You need " . ($nextRank->getPrice() - $this->getPlugin()->getEconomy()->getBal($sender)) . " to rank up.");
+                                $sender->sendMessage($this->getPlugin()->getLanguageConfig()->getLangSetting('need-more-money-1'));
+                                $sender->sendMessage(sprintf($this->getPlugin()->getLanguageConfig()->getLangSetting('need-more-money-2'), $nextRank->getPrice() - $this->getPlugin()->getEconomy()->getBal($sender)));
                             }
                         }
                         else{
                             if($this->getPlugin()->getPermManager()->addToGroup($sender, $nextRank->getName()) !== false){
-                                //TODO add to lang
-                                $sender->sendMessage("You have been ranked up to " . $nextRank->getName());
+                                $sender->sendMessage(sprintf($this->getPlugin()->getLanguageConfig()->getLangSetting('ranked-up-free'), $nextRank->getName()));
                             }
                             else{
-                                //TODO add to lang
-                                $sender->sendMessage("Failed to rankup. Try again later.");
+                                $sender->sendMessage($this->getPlugin()->getLanguageConfig()->getLangSetting('group-add-error-free'));
                             }
                         }
                     }
                     else{
-                        //TODO add to lang
-                        $sender->sendMessage("Can't purchase now.");
+                        $sender->sendMessage($this->getPlugin()->getLanguageConfig()->getLangSetting('missing-economy'));
                     }
                  }
                 else{
-                    //TODO add to lang
-                    $sender->sendMessage("You have the maximum rank.");
+                    $sender->sendMessage($this->getPlugin()->getLanguageConfig()->getLangSetting('have-max-rank'));
                 }
             }
             else{
-                $sender->sendMessage("You don't have permission to rankup.");
+                $sender->sendMessage($this->getPlugin()->getLanguageConfig()->getLangSetting('command-permission-error'));
             }
         }
         else{

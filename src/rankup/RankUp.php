@@ -12,6 +12,8 @@ use rankup\permission\BasePermissionManager;
 use rankup\rank\RankStore;
 
 class RankUp extends PluginBase{
+    /** @var  LanguageConfig */
+    private $languageConfig;
     /** @var  RankUpDoesGroups */
     private $rankUpDoesGroups = false;
     /** @var  PermissionLoader */
@@ -28,7 +30,7 @@ class RankUp extends PluginBase{
     private $rankupCommand;
     public function onEnable(){
         $this->saveDefaultConfig();
-
+        $this->languageConfig = new LanguageConfig($this->getConfig());
         $this->loadRankUpDoesGroups();
 
         $this->permissionLoader = new PermissionLoader($this);
@@ -42,6 +44,13 @@ class RankUp extends PluginBase{
 
         $this->rankupCommand = new RankUpCommand($this);
         $this->getServer()->getCommandMap()->register("rankup", $this->rankupCommand);
+    }
+
+    /**
+     * @return \rankup\LanguageConfig
+     */
+    public function getLanguageConfig(){
+        return $this->languageConfig;
     }
 
     /**

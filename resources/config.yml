@@ -24,8 +24,21 @@ preferred-groupmanager: "rankup\\permission\\RankUpDoesGroups"
   # rankup\\permission\\RankUpDoesGroups and rankup\\permission\\xPermissions are available.
   # RankUpDoesGroups is a super barebones alternative for users who don't use xPerms
 
-ranks: # Define your ranks here
+ranks: # Define all your ranks here
   A: 0
   B: 0
   C: 15
   D: 50
+
+lang:
+  ranked-up-paid: "You have been ranked up to %s"
+  ranked-up-free: "You have been ranked up to %s"
+  group-add-error-paid: "Failed to rankup. Refunded price."
+  group-add-error-free: "Failed to rankup. Try again later."
+  need-more-money-1: "Looks like you don't have enough money."
+  need-more-money-2: "You need %s to rank up."
+  missing-economy: "Can't purchase now."
+  have-max-rank: "You have the maximum rank."
+  command-permission-error: "You don't have permission to rankup."
+
+
