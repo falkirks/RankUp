@@ -75,6 +75,7 @@ class RankUpDoesGroups{
             $arr['groups'][$name]['members'] = $group->getMembers();
         }
         $this->getConfig()->setAll($arr);
+        $this->getConfig()->save();
     }
     /**
      * @return \pocketmine\utils\Config
