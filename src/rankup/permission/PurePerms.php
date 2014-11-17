@@ -4,7 +4,7 @@ namespace rankup\permission;
 use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 
-class xPermission extends BasePermissionManager{
+class PurePerms extends BasePermissionManager{
     public function addToGroup(Player $player, $group){
         // TODO: Implement addToGroup() method.
     }
@@ -18,7 +18,7 @@ class xPermission extends BasePermissionManager{
     }
 
     public function getAPI(){
-        return $this->getPlugin()->getServer()->getPluginManager()->getPlugin("xPermissions");
+        return $this->getPlugin()->getServer()->getPluginManager()->getPlugin("PurePerms");
     }
 
     public function isReady(){
@@ -28,4 +28,5 @@ class xPermission extends BasePermissionManager{
     public function getName(){
         // TODO: Implement getName() method.
     }
+
 }
