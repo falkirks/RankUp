@@ -22,7 +22,6 @@ class PocketMoney extends BaseEconomy{
         return 0;
     }
     public function getAPI(){
-        if(!$this->checkReady()) return false;
         return $this->getPlugin()->getServer()->getPluginManager()->getPlugin("PocketMoney");
     }
     public function isReady(){
