@@ -1,6 +1,6 @@
 name: RankUp
 main: rankup\RankUp
-version: 0.2
+version: 0.2.1
 author: Falk
 api: [1.4.0]
 load: POSTWORLD
