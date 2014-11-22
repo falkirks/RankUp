@@ -6,7 +6,7 @@ use pocketmine\plugin\PluginBase;
 
 class PurePerms extends BasePermissionManager{
     public function addToGroup(Player $player, $group){
-        // TODO: Implement addToGroup() method.
+        if(!$this->checkReady()) return false;
     }
 
     public function getGroup(Player $player){
@@ -17,6 +17,9 @@ class PurePerms extends BasePermissionManager{
         // TODO: Implement getPlayersInGroup() method.
     }
 
+    /**
+     * @return null|\_64FF00\PurePerms\PurePerms
+     */
     public function getAPI(){
         return $this->getPlugin()->getServer()->getPluginManager()->getPlugin("PurePerms");
     }
