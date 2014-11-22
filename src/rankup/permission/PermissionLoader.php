@@ -11,7 +11,7 @@ class PermissionLoader{
     public function load(){
         if($this->plugin->getConfig()->get('preferred-groupmanager') !== false){
             $name = $this->plugin->getConfig()->get('preferred-groupmanager');
-            if(class_exists($name) && is_subclass_of($name, BasePermissionManager::class)){
+            try{
                 $permManager = new $name($this->plugin);
                 if($permManager instanceof BasePermissionManager){
                     if($permManager->isReady()){
@@ -23,7 +23,7 @@ class PermissionLoader{
                     }
                 }
             }
-            else{
+            catch(\ClassNotFoundException $e){
                 $this->plugin->getLogger()->critical("The preferred-groupmanager you specified is not supported.");
             }
         }

@@ -22,7 +22,7 @@ class RankStore{
     }
     public function getRankByName($name){
         foreach($this->ranks as $rank){
-            if($rank->getName() === $name){
+            if(strtolower($rank->getName()) === strtolower($name)){
                 return $rank;
             }
         }

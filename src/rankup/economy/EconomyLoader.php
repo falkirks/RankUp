@@ -11,7 +11,7 @@ class EconomyLoader{
     public function load(){
         if($this->plugin->getConfig()->get('preferred-economy') !== false){
             $name = $this->plugin->getConfig()->get('preferred-economy');
-            if(class_exists($name) && is_subclass_of($name, BaseEconomy::class)){
+            try{
                 $econ = new $name($this->plugin);
                 if($econ instanceof BaseEconomy){
                     if($econ->isReady()){
@@ -23,7 +23,7 @@ class EconomyLoader{
                     }
                 }
             }
-            else{
+            catch(\ClassNotFoundException $e){
                 $this->plugin->getLogger()->critical("The preferred-economy you specified is not supported.");
             }
         }
