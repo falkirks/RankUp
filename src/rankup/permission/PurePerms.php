@@ -7,10 +7,18 @@ use pocketmine\plugin\PluginBase;
 class PurePerms extends BasePermissionManager{
     public function addToGroup(Player $player, $group){
         if(!$this->checkReady()) return false;
+		foreach($this->getAPI()->getGroups() as $PPGroup){
+			if(strtolower($PPGroup->getName()) == strtolower($group)){
+				$group = $PPGroup;
+				break;
+			}
+		}
     }
 
     public function getGroup(Player $player){
-        // TODO: Implement getGroup() method.
+        if(!$this->checkReady()) return false;		
+		$user = $this->getAPI()->getUser($player);
+		return $user->getGroup();
     }
 
     public function getPlayersInGroup($name){
@@ -29,7 +37,7 @@ class PurePerms extends BasePermissionManager{
     }
 
     public function getName(){
-        // TODO: Implement getName() method.
+        return "PurePerms by 64FF00";
     }
 
 }

@@ -28,7 +28,7 @@ class PermissionLoader{
             }
         }
         else{
-            //TODO autoload xPermissions and RankUpDoesGroups
+            //TODO autoload PurePerms and RankUpDoesGroups
         }
     }
 }
