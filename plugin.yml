@@ -1,10 +1,10 @@
 name: RankUp
 main: rankup\RankUp
-version: 0.2.1
+version: 0.3.0
 author: Falkirks
 api: [1.4.0]
 load: POSTWORLD
-softdepend: ["EconomyAPI", "PocketMoney", "XPermissions"]
+softdepend: ["EconomyAPI", "PocketMoney", "PurePerms"]
 permissions:
  rankup:
   default: true

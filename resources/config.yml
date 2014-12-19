@@ -21,8 +21,8 @@ preferred-economy: "rankup\\economy\\Economy"
   # Set to false for autoloading (only offcially supported economys will autoload).
 preferred-groupmanager: "rankup\\permission\\RankUpDoesGroups"
   # Set your preferred group manager
-  # rankup\\permission\\RankUpDoesGroups and rankup\\permission\\xPermissions are available.
-  # RankUpDoesGroups is a super barebones alternative for users who don't use xPerms
+  # rankup\\permission\\RankUpDoesGroups and rankup\\permission\\PurePerms are available.
+  # RankUpDoesGroups is a super barebones alternative for users who don't use PurePerms
 
 ranks: # Define all your ranks here
   A: 0
