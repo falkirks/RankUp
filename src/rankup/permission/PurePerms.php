@@ -16,7 +16,7 @@ class PurePerms extends BasePermissionManager{
     public function getGroup(Player $player){
         if(!$this->checkReady()) return false;		
 		$user = $this->getAPI()->getUser($player);
-		return $user->getGroup();
+		return $user->getGroup()->getName();
     }
     public function getPlayersInGroup($name){
         // TODO: Implement getPlayersInGroup() method.
