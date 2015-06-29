@@ -6,12 +6,8 @@ use pocketmine\plugin\PluginBase;
 class PurePerms extends BasePermissionManager{
     public function addToGroup(Player $player, $group){
         if(!$this->checkReady()) return false;
-		foreach($this->getAPI()->getGroups() as $PPGroup){
-			if(strtolower($PPGroup->getName()) == strtolower($group)){
-				$group = $PPGroup;
-				break;
-			}
-		}
+        $ppGroup = $this->getAPI()->getGroup($group);
+		$this->getAPI()->setGroup($player, $ppGroup);
     }
     public function getGroup(Player $player){
         if(!$this->checkReady()) return false;		
