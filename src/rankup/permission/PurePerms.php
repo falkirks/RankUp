@@ -1,5 +1,6 @@
 <?php
 namespace rankup\permission;
+use _64FF00\PurePerms\PPGroup;
 use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 
@@ -7,13 +8,12 @@ class PurePerms extends BasePermissionManager{
     public function addToGroup(Player $player, $group){
         if(!$this->checkReady()) return false;
         $ppGroup = $this->getAPI()->getGroup($group);
-		$this->getAPI()->getUser($player)->setGroup($ppGroup, null);
+		$this->getAPI()->setGroup($player, $ppGroup);
         return true;
     }
     public function getGroup(Player $player){
         if(!$this->checkReady()) return false;		
-		$user = $this->getAPI()->getUser($player);
-		return $user->getGroup()->getName();
+		return $this->getAPI()->getUserDataMgr()->getGroup($player);
     }
 
     /**
@@ -23,9 +23,9 @@ class PurePerms extends BasePermissionManager{
      */
     public function getPlayersInGroup($name){
         if(!$this->checkReady()) return false;
-        $group = $this->getAPI()->getGroup($name);
-        if($group !== null) {
-            return $group->getUsers();
+        $ppGroup = $this->getAPI()->getGroup($name);
+        if($ppGroup instanceof PPGroup) {
+            return $this->getAPI()->getOnlinePlayersInGroup($ppGroup);
         }
         return null;
     }
@@ -40,6 +40,6 @@ class PurePerms extends BasePermissionManager{
         return ($this->getAPI() instanceof PluginBase);
     }
     public function getName(){
-        return "PurePerms by 64FF00";
+        return "PurePerms_v1.2 by 64FF00";
     }
 }
