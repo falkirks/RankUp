@@ -13,7 +13,7 @@ class PurePerms extends BasePermissionManager{
     }
     public function getGroup(Player $player){
         if(!$this->checkReady()) return false;		
-		return $this->getAPI()->getUserDataMgr()->getGroup($player)->getName();
+		return $this->getAPI()->getUserDataMgr()->getGroup($player);
     }
 
     /**
