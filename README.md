@@ -1,4 +1,4 @@
-RankUp Works for 0.16+
+RankUp
 ========
 RankUp is a comically full-featured prison ranking plugin. It allows players upgrade their ranking using a certain amount of money. To manage ranks, RankUp comes with a built in group manager called DoesGroups. You can also use PurePerms to manage ranks. RankUp comes with support for both EconomyS and PocketMoney for a currency.
 
