@@ -9,5 +9,5 @@ RankUp is a comically full-featured prison ranking plugin. It allows players upg
 
 ## Developed by
 * @Falkirks
-* @MegaSamNinja
+* @Bamuel
 * @Darunia18
