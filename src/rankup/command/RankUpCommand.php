@@ -19,7 +19,7 @@ class RankUpCommand extends Command implements PluginIdentifiableCommand{
                 $nextRank = $this->getPlugin()->getRankStore()->getNextRank($sender);
                 //$sender->sendMessage($nextRank->getName());
                 if ($nextRank !== false) {
-                    if ($nextRank->getPrice() == 0 || $this->getPlugin()->isLinkedToEconomy()) {
+                    if ($nextRank->getPrice() === 0 || $this->getPlugin()->isLinkedToEconomy()) {
                         if ($nextRank->getPrice() > 0) {
                             if ($this->getPlugin()->getEconomy()->take($nextRank->getPrice(), $sender) !== false) {
                                 if ($this->getPlugin()->getPermManager()->addToGroup($sender, $nextRank->getName()) !== false) {

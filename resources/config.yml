@@ -18,7 +18,7 @@ unleash-the-rankupdoesgroups: true
 preferred-economy: false
   # Set your preferred economy
   # rankup\\economy\\Economy and rankup\\economy\\PocketMoney are available by default
-  # Set to false for autoloading (only offcially supported economys will autoload).
+  # Set to false for autoloading (only officially supported economys will autoload).
 preferred-groupmanager: "rankup\\permission\\RankUpDoesGroups"
   # Set your preferred group manager
   # rankup\\permission\\RankUpDoesGroups and rankup\\permission\\PurePerms are available.

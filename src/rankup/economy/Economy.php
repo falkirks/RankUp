@@ -1,6 +1,7 @@
 <?php
 namespace rankup\economy;
 
+use onebone\economyapi\EconomyAPI;
 use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 
@@ -28,6 +29,10 @@ class Economy extends BaseEconomy{
             return false;
         }
     }
+
+    /**
+     * @return EconomyAPI
+     */
     public function getAPI(){
         return $this->getPlugin()->getServer()->getPluginManager()->getPlugin("EconomyAPI");
     }

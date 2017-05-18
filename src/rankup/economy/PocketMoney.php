@@ -7,20 +7,23 @@ use pocketmine\plugin\PluginBase;
 class PocketMoney extends BaseEconomy{
     public function give($amt, Player $player){
         if(!$this->checkReady()) return false;
-        return (!isset($this->getAPI()->grantMoney($player->getName(), $amt)->description));
+        return $this->getAPI()->grantMoney($player->getName(), $amt);
     }
     public function take($amt, Player $player){
         if(!$this->checkReady()) return false;
-        return (!isset($this->getAPI()->grantMoney($player->getName(), -$amt)->description));
+        return $this->getAPI()->grantMoney($player->getName(), -$amt);
     }
     public function setBal($amt, Player $player){
         if(!$this->checkReady()) return false;
-        return (!isset($this->getAPI()->setMoney($player->getName(), $amt)->description));
+        return $this->getAPI()->setMoney($player->getName(), $amt);
     }
     public function getBal(Player $player){
-        // TODO: Implement getBal() method.
-        return 0;
+        return $this->getAPI()->getMoney($player->getName());
     }
+
+    /**
+     * @return \PocketMoney\PocketMoney
+     */
     public function getAPI(){
         return $this->getPlugin()->getServer()->getPluginManager()->getPlugin("PocketMoney");
     }
