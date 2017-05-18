@@ -50,6 +50,7 @@ class Group{
             foreach($this->exit as $cmd){
                 $this->getMain()->getServer()->dispatchCommand(new ConsoleCommandSender(), str_replace("{name}", $player->getName(), $cmd));
             }
+            return true;
         }
         else{
             return false;
