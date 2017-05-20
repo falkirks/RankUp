@@ -14,7 +14,7 @@ class EssentialsEconomy extends BaseEconomy{
     public function take($amt, Player $player){
         if(!$this->checkReady()) return false;
 
-        return $this->getAPI()->subtractFromBalance($player, -$amt);
+        return $this->getAPI()->subtractFromBalance($player, $amt);
     }
     public function setBal($amt, Player $player){
         if(!$this->checkReady()) return false;
