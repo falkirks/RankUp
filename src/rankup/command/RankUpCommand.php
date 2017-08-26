@@ -6,6 +6,7 @@ use pocketmine\command\CommandSender;
 use pocketmine\command\PluginIdentifiableCommand;
 use pocketmine\Player;
 use rankup\RankUp;
+use pocketmine\plugin\Plugin;
 
 class RankUpCommand extends Command implements PluginIdentifiableCommand{
     private $main;
@@ -53,7 +54,7 @@ class RankUpCommand extends Command implements PluginIdentifiableCommand{
         }
 
     }
-    public function getPlugin(){
+    public function getPlugin(): plugin{
         return $this->main;
     }
 }
