@@ -59,7 +59,7 @@ class RankUpCommand extends Command{
             $sender->sendMessage("Cool stats and details go here :-)");
             return true;
         }
-
+return true;
     }
     
     public function getPlugin() : RankUp{
