@@ -63,8 +63,7 @@ class RankUpCommand extends Command implements PluginIdentifiableCommand{
     }
     
     public function getPlugin() : RankUp{
-        return $this->main;
-  }
+    }
 
     public function onDisable(){
         $this->prepare->close();
