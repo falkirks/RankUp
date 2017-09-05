@@ -6,6 +6,7 @@ use pocketmine\command\CommandSender;
 use pocketmine\command\PluginIdentifiableCommand;
 use pocketmine\Player;
 use rankup\RankUp;
+use pocketmine\utils\TextFormat;
 
 class RankUpCommand extends Command implements PluginIdentifiableCommand{
     private $main;
@@ -13,6 +14,12 @@ class RankUpCommand extends Command implements PluginIdentifiableCommand{
         parent::__construct("rankup", "Get all the ranks.", "/rankup", ["ru"]);
         $this->main = $main;
     }
+    
+     public function onEnable(){
+        $this->getLogger()->info(TextFormat::GREEN . "RankUp v1.0 loading...");
+        $this->getLogger()->info(TextFormat::GREEN . "RankUp v1.0 enabled!");
+     }
+    
     public function execute(CommandSender $sender, string $label, array $args) : bool{
         if ($sender instanceof Player && count($args) == 0 || !$sender->hasPermission("rankup.admin")) {
             if ($sender->hasPermission("rankup.rankup")) {
@@ -58,3 +65,9 @@ class RankUpCommand extends Command implements PluginIdentifiableCommand{
     public function getPlugin() : RankUp{
         return $this->main;
   }
+
+    public function onDisable(){
+        $this->prepare->close();
+        $this->getLogger()->info(TextFormat::RED . "RankUp v1.0 Disabling...");
+        $this->getLogger()->info(TextFormat::RED . "RankUp v1.0 Disabled!");
+    }
