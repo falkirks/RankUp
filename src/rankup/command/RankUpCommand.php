@@ -6,14 +6,21 @@ use pocketmine\command\CommandSender;
 use pocketmine\command\PluginIdentifiableCommand;
 use pocketmine\Player;
 use rankup\RankUp;
+use pocketmine\utils\TextFormat;
 
-class RankUpCommand extends Command implements PluginIdentifiableCommand{
+class RankUpCommand extends Command{
     private $main;
     public function __construct(RankUp $main){
         parent::__construct("rankup", "Get all the ranks.", "/rankup", ["ru"]);
         $this->main = $main;
     }
-    public function execute(CommandSender $sender, $label, array $args){
+
+    public function onEnable(){
+        $this->getLogger()->info(TextFormat::GREEN . "RankUp v1.0 loading...");
+        $this->getLogger()->info(TextFormat::GREEN . "RankUp v1.0 enabled!");
+    }
+
+    public function execute(CommandSender $sender, string $label, array $args) : bool{
         if ($sender instanceof Player && count($args) == 0 || !$sender->hasPermission("rankup.admin")) {
             if ($sender->hasPermission("rankup.rankup")) {
                 $nextRank = $this->getPlugin()->getRankStore()->getNextRank($sender);
@@ -23,37 +30,52 @@ class RankUpCommand extends Command implements PluginIdentifiableCommand{
                         if ($nextRank->getPrice() > 0) {
                             if ($this->getPlugin()->getEconomy()->take($nextRank->getPrice(), $sender) !== false) {
                                 if ($this->getPlugin()->getPermManager()->addToGroup($sender, $nextRank->getName()) !== false) {
-                                    $sender->sendMessage(sprintf($this->getPlugin()->getLanguageConfig()->getLangSetting('ranked-up-paid'), $nextRank->getName()));
+                                    $sender->sendMessage(TextFormat::AQUA . "[RankUp] ".TextFormat::GREEN . sprintf($this->getPlugin()->getLanguageConfig()->getLangSetting('ranked-up-paid'), $nextRank->getName()));
+                                    return true;
                                 } else {
-                                    $sender->sendMessage($this->getPlugin()->getLanguageConfig()->getLangSetting('group-add-error-paid'));
+                                    $sender->sendMessage(TextFormat::AQUA . "[RankUp] ".TextFormat::RED . $this->getPlugin()->getLanguageConfig()->getLangSetting('group-add-error-paid'));
                                     $this->getPlugin()->getEconomy()->give($nextRank->getPrice(), $sender);
+                                    return true;
                                 }
                             } else {
-                                $sender->sendMessage($this->getPlugin()->getLanguageConfig()->getLangSetting('need-more-money-1'));
-                                $sender->sendMessage(sprintf($this->getPlugin()->getLanguageConfig()->getLangSetting('need-more-money-2'), $nextRank->getPrice() - $this->getPlugin()->getEconomy()->getBal($sender)));
+                                $sender->sendMessage(TextFormat::AQUA . "[RankUp] ".TextFormat:: RED . $this->getPlugin()->getLanguageConfig()->getLangSetting('need-more-money-1'));
+                                $sender->sendMessage(TextFormat::AQUA . "[RankUp] ".TextFormat::GOLD . sprintf($this->getPlugin()->getLanguageConfig()->getLangSetting('need-more-money-2'), $nextRank->getPrice() - $this->getPlugin()->getEconomy()->getBal($sender)));
+                                return true;
                             }
                         } else {
                             if ($this->getPlugin()->getPermManager()->addToGroup($sender, $nextRank->getName()) !== false) {
-                                $sender->sendMessage(sprintf($this->getPlugin()->getLanguageConfig()->getLangSetting('ranked-up-free'), $nextRank->getName()));
+                                $sender->sendMessage(TextFormat::AQUA . "[RankUp] ".TextFormat::GREEN . sprintf($this->getPlugin()->getLanguageConfig()->getLangSetting('ranked-up-free'), $nextRank->getName()));
+                                return true;
                             } else {
-                                $sender->sendMessage($this->getPlugin()->getLanguageConfig()->getLangSetting('group-add-error-free'));
+                                $sender->sendMessage(TextFormat::AQUA . "[RankUp] ".TextFormat::RED . $this->getPlugin()->getLanguageConfig()->getLangSetting('group-add-error-free'));
+                                return true;
                             }
                         }
                     } else {
-                        $sender->sendMessage($this->getPlugin()->getLanguageConfig()->getLangSetting('missing-economy'));
+                        $sender->sendMessage(TextFormat::AQUA . "[RankUp] ".TextFormat::RED . $this->getPlugin()->getLanguageConfig()->getLangSetting('missing-economy'));
+                        return true;
                     }
                 } else {
-                    $sender->sendMessage($this->getPlugin()->getLanguageConfig()->getLangSetting('have-max-rank'));
+                    $sender->sendMessage(TextFormat::AQUA . "[RankUp] ".TextFormat::RED . $this->getPlugin()->getLanguageConfig()->getLangSetting('have-max-rank'));
+                    return true;
                 }
             } else {
-                $sender->sendMessage($this->getPlugin()->getLanguageConfig()->getLangSetting('command-permission-error'));
+                $sender->sendMessage(TextFormat::AQUA . "[RankUp] ".TextFormat::RED . $this->getPlugin()->getLanguageConfig()->getLangSetting("command-permission-error"));
+                return true;
             }
         } else {
             $sender->sendMessage("Cool stats and details go here :-)");
+            return true;
         }
-
     }
-    public function getPlugin(){
+
+    public function getPlugin() : RankUp{
         return $this->main;
+    }
+
+    public function onDisable(){
+        $this->prepare->close();
+        $this->getLogger()->info(TextFormat::RED . "RankUp v1.0 Disabling...");
+        $this->getLogger()->info(TextFormat::RED . "RankUp v1.0 Disabled!");
     }
 }
