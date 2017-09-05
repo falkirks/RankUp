@@ -8,7 +8,7 @@ use pocketmine\Player;
 use rankup\RankUp;
 use pocketmine\utils\TextFormat;
 
-class RankUpCommand extends Command implements PluginIdentifiableCommand{
+class RankUpCommand extends Command{
     private $main;
     public function __construct(RankUp $main){
         parent::__construct("rankup", "Get all the ranks.", "/rankup", ["ru"]);
@@ -63,6 +63,7 @@ class RankUpCommand extends Command implements PluginIdentifiableCommand{
     }
     
     public function getPlugin() : RankUp{
+        return $this->main;
     }
 
     public function onDisable(){
