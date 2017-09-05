@@ -31,29 +31,37 @@ class RankUpCommand extends Command{
                             if ($this->getPlugin()->getEconomy()->take($nextRank->getPrice(), $sender) !== false) {
                                 if ($this->getPlugin()->getPermManager()->addToGroup($sender, $nextRank->getName()) !== false) {
                                     $sender->sendMessage(sprintf($this->getPlugin()->getLanguageConfig()->getLangSetting('ranked-up-paid'), $nextRank->getName()));
+                                return true;
                                 } else {
                                     $sender->sendMessage($this->getPlugin()->getLanguageConfig()->getLangSetting('group-add-error-paid'));
                                     $this->getPlugin()->getEconomy()->give($nextRank->getPrice(), $sender);
+                                    return true;
                                 }
                             } else {
                                 $sender->sendMessage($this->getPlugin()->getLanguageConfig()->getLangSetting('need-more-money-1'));
                                 $sender->sendMessage(sprintf($this->getPlugin()->getLanguageConfig()->getLangSetting('need-more-money-2'), $nextRank->getPrice() - $this->getPlugin()->getEconomy()->getBal($sender)));
+                            return true;
                             }
                         } else {
                             if ($this->getPlugin()->getPermManager()->addToGroup($sender, $nextRank->getName()) !== false) {
                                 $sender->sendMessage(sprintf($this->getPlugin()->getLanguageConfig()->getLangSetting('ranked-up-free'), $nextRank->getName()));
+                            return true;
                             } else {
                                 $sender->sendMessage($this->getPlugin()->getLanguageConfig()->getLangSetting('group-add-error-free'));
+                                return true;
                             }
                         }
                     } else {
                         $sender->sendMessage($this->getPlugin()->getLanguageConfig()->getLangSetting('missing-economy'));
+                        return true;
                     }
                 } else {
                     $sender->sendMessage($this->getPlugin()->getLanguageConfig()->getLangSetting('have-max-rank'));
+                    return true;
                 }
             } else {
                 $sender->sendMessage($this->getPlugin()->getLanguageConfig()->getLangSetting('command-permission-error'));
+                return true;
             }
         } else {
             $sender->sendMessage("Cool stats and details go here :-)");
