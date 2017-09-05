@@ -71,3 +71,4 @@ class RankUpCommand extends Command implements PluginIdentifiableCommand{
         $this->getLogger()->info(TextFormat::RED . "RankUp v1.0 Disabling...");
         $this->getLogger()->info(TextFormat::RED . "RankUp v1.0 Disabled!");
     }
+}
