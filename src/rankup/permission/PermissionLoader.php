@@ -5,6 +5,7 @@ use rankup\RankUp;
 
 class PermissionLoader{
     private $plugin;
+    private $name;
     public function __construct(RankUp $plugin){
         $this->plugin = $plugin;
     }
@@ -13,6 +14,7 @@ class PermissionLoader{
             $name = $this->plugin->getConfig()->get('preferred-groupmanager');
             try{
                 $permManager = new $name($this->plugin);
+                $this->name = $permManager->getName();
                 if($permManager instanceof BasePermissionManager){
                     if($permManager->isReady()){
                         $this->plugin->setPermManager($permManager);
