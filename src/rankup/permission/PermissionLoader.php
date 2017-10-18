@@ -33,4 +33,7 @@ class PermissionLoader{
             //TODO autoload PurePerms and RankUpDoesGroups
         }
     }
+    public function getName() : string{
+    	return $this->name;
+	}
 }
