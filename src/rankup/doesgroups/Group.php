@@ -2,7 +2,6 @@
 namespace rankup\doesgroups;
 
 use pocketmine\command\ConsoleCommandSender;
-use pocketmine\permission\Permissible;
 use pocketmine\permission\Permission;
 use pocketmine\Player;
 
@@ -15,6 +14,8 @@ class Group{
     private $permsToSet;
     private $entrance;
     private $exit;
+    private $name;
+    private $members;
     public function __construct(RankUpDoesGroups $main, $name, $perms, $entrance, $exit, $members){
         $this->main = $main;
         $this->name = $name;

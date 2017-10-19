@@ -1,8 +1,8 @@
 <?php
 namespace rankup\economy;
 
-use onebone\economyapi\EconomyAPI;
 use pocketmine\Player;
+use pocketmine\plugin\Plugin;
 use pocketmine\plugin\PluginBase;
 
 class Economy extends BaseEconomy{
@@ -31,7 +31,7 @@ class Economy extends BaseEconomy{
     }
 
     /**
-     * @return EconomyAPI
+     * @return Plugin
      */
     public function getAPI(){
         return $this->getPlugin()->getServer()->getPluginManager()->getPlugin("EconomyAPI");

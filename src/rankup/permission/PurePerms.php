@@ -2,6 +2,7 @@
 namespace rankup\permission;
 use _64FF00\PurePerms\PPGroup;
 use pocketmine\Player;
+use pocketmine\plugin\Plugin;
 use pocketmine\plugin\PluginBase;
 
 class PurePerms extends BasePermissionManager{
@@ -19,7 +20,7 @@ class PurePerms extends BasePermissionManager{
     /**
      * getUsers() is not implemented in PurePerms. This method will NOT work.
      * @param $name
-     * @return bool|void
+     * @return mixed
      */
     public function getPlayersInGroup($name){
         if(!$this->checkReady()) return false;
@@ -31,14 +32,20 @@ class PurePerms extends BasePermissionManager{
     }
 
     /**
-     * @return null|\_64FF00\PurePerms\PurePerms
+     * @return Plugin
      */
     public function getAPI(){
         return $this->getPlugin()->getServer()->getPluginManager()->getPlugin("PurePerms");
     }
+	/**
+	 * @return bool
+	 */
     public function isReady(){
         return ($this->getAPI() instanceof PluginBase);
     }
+	/**
+	 * @return string
+	 */
     public function getName(){
         return "PurePerms_v1.2 by 64FF00";
     }

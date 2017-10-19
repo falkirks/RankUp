@@ -5,6 +5,7 @@ use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\command\PluginIdentifiableCommand;
 use pocketmine\Player;
+use pocketmine\plugin\Plugin;
 use rankup\RankUp;
 
 class RankUpCommand extends Command implements PluginIdentifiableCommand{
@@ -13,7 +14,7 @@ class RankUpCommand extends Command implements PluginIdentifiableCommand{
         parent::__construct("rankup", "Get all the ranks.", "/rankup", ["ru"]);
         $this->main = $main;
     }
-    public function execute(CommandSender $sender, $label, array $args){
+    public function execute(CommandSender $sender, string $label, array $args) : bool{
         if ($sender instanceof Player && count($args) == 0 || !$sender->hasPermission("rankup.admin")) {
             if ($sender->hasPermission("rankup.rankup")) {
                 $nextRank = $this->getPlugin()->getRankStore()->getNextRank($sender);
@@ -51,9 +52,9 @@ class RankUpCommand extends Command implements PluginIdentifiableCommand{
         } else {
             $sender->sendMessage("Cool stats and details go here :-)");
         }
-
+        return true;
     }
-    public function getPlugin(){
+    public function getPlugin() : Plugin{
         return $this->main;
     }
 }

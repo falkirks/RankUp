@@ -1,7 +1,6 @@
 <?php
 namespace rankup\doesgroups;
 
-use pocketmine\permission\Permissible;
 use pocketmine\permission\Permission;
 use pocketmine\Player;
 use pocketmine\Server;
