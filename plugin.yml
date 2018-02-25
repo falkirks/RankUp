@@ -1,6 +1,6 @@
 name: RankUp
 main: rankup\RankUp
-version: 1.2.10.2
+version: 0.3.1
 author: Falkirks
 api: [3.0.0-ALPHA11, 3.0.0-ALPHA12]
 load: POSTWORLD
