@@ -151,6 +151,9 @@ class RankUp extends PluginBase
         return $this->rankUpDoesGroups;
     }
 
+    /**
+     * @return bool
+     */
     public function isDoesGroupsLoaded()
     {
         return $this->rankUpDoesGroups instanceof RankUpDoesGroups;
