@@ -2,13 +2,22 @@
 
 namespace rankup\doesgroups;
 
+use pocketmine\event\Listener;
+use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\permission\Permission;
 use pocketmine\Player;
 use pocketmine\Server;
 use pocketmine\utils\Config;
 
-class RankUpDoesGroups
-{
+class RankUpDoesGroups implements Listener {
+    /**
+     * RankUpDoesGroups is an ideally plugin agnostic (bad) group manager
+     * it needs to leech off a plugin to register events and permissions.
+     *
+     * But this could be any plugin...
+     */
+    const PARENT_PLUGIN_NAME = "RankUp";
+
     /** @var \pocketmine\utils\Config */
     private $config;
     /** @var \pocketmine\permission\Permission */
@@ -31,19 +40,23 @@ class RankUpDoesGroups
         $this->server = $server;
         $this->groups = [];
         $this->initPermissions();
+
+        $this->getServer()->getPluginManager()->registerEvents($this, $server->getPluginManager()->getPlugin(self::PARENT_PLUGIN_NAME));
     }
 
     public function initPermissions()
     {
         foreach ($this->config->get('groups') as $name => $groupData) {
-            $perms = [];
-            foreach ($groupData['perms'] as $str) {
-                $str = $this->getServer()->getPluginManager()->getPermission($str);
-                if ($str instanceof Permission) {
-                    $perms[] = $str;
-                }
-            }
-            $this->groups[$name] = new Group($this, $name, $perms, $groupData['entrance'], $groupData['exit'], $groupData['members']);
+            $this->groups[$name] = new Group($this, $name, $groupData['perms'], $groupData['entrance'], $groupData['exit'], $groupData['members']);
+        }
+    }
+
+    /**
+     * @param PlayerJoinEvent $event
+     */
+    public function onPlayerJoin(PlayerJoinEvent $event){
+        foreach ($this->groups as $group){
+            $group->maintainMember($event->getPlayer());
         }
     }
 

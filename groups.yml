@@ -1,0 +1,29 @@
+---
+groups:
+  A:
+    entrance:
+    - say {name} ranked up to A
+    exit: []
+    perms: []
+    members: []
+  B:
+    entrance:
+    - say {name} ranked up to B
+    exit: []
+    perms:
+    - pocketmine.command.say
+    members:
+    - falkirks
+  C:
+    entrance:
+    - say {name} ranked up to C
+    exit: []
+    perms: []
+    members: []
+  D:
+    entrance:
+    - say {name} ranked up to D
+    exit: []
+    perms: []
+    members: []
+...

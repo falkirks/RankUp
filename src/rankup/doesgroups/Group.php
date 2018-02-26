@@ -19,6 +19,8 @@ class Group
     private $name;
     private $members;
 
+    private $attachmentMap;
+
     /**
      * Group constructor.
      * @param RankUpDoesGroups $main
@@ -36,6 +38,8 @@ class Group
         $this->entrance = $entrance;
         $this->exit = $exit;
         $this->members = $members;
+
+        $this->attachmentMap = [];
     }
 
     /**
@@ -47,19 +51,35 @@ class Group
     }
 
     /**
+     * Performs required actions to add $play to this group and persist
      * @param Player $player
      */
     public function addMember(Player $player)
     {
         $this->members[] = $player->getName();
         $this->getMain()->saveMembers();
-        $attachment = $player->addAttachment($this->getMain()->getServer()->getPluginManager()->getPlugin("RankUp"));
-        foreach ($this->permsToSet as $permToSet) {
-            $attachment->setPermission($permToSet, true);
-        }
-        $player->removeAttachment($attachment);
+
+        $this->maintainMember($player);
+
+        //$player->removeAttachment($attachment);
         foreach ($this->entrance as $cmd) {
             $this->getMain()->getServer()->dispatchCommand(new ConsoleCommandSender(), str_replace("{name}", $player->getName(), $cmd));
+        }
+    }
+
+
+    /**
+     * Performs duties for membership maintenance; attaching permissions
+     * if player is not in group this is a noop
+     * @param Player $player
+     */
+    public function maintainMember(Player $player){
+        if(!isset($this->attachmentMap[$player->getName()]) && $this->isMember($player)) {
+            $attachment = $player->addAttachment($this->getMain()->getServer()->getPluginManager()->getPlugin(RankUpDoesGroups::PARENT_PLUGIN_NAME));
+            foreach ($this->permsToSet as $permToSet) {
+                $attachment->setPermission($permToSet, true);
+            }
+            $this->attachmentMap[$player->getName()] = $attachment;
         }
     }
 
@@ -78,13 +98,19 @@ class Group
     public function removeMember(Player $player)
     {
         if (in_array($player->getName(), $this->members)) {
+
+            // Remove for register
             unset($this->members[array_search($player->getName(), $this->members)]);
             $this->getMain()->saveMembers();
-            $attachment = $player->addAttachment($this->getMain()->getServer()->getPluginManager()->getPlugin("RankUp"));
-            foreach ($this->permsToSet as $permToSet) {
-                $attachment->unsetPermission($permToSet);
+
+
+            // Remove attachment if needed
+            if(isset($this->attachmentMap[$player->getName()])){
+                $player->removeAttachment($this->attachmentMap[$player->getName()]);
+                unset($this->attachmentMap[$player->getName()]);
             }
-            $player->removeAttachment($attachment);
+
+            // Run exit commands
             foreach ($this->exit as $cmd) {
                 $this->getMain()->getServer()->dispatchCommand(new ConsoleCommandSender(), str_replace("{name}", $player->getName(), $cmd));
             }
