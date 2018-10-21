@@ -8,6 +8,7 @@ use pocketmine\permission\Permission;
 use pocketmine\Player;
 use pocketmine\Server;
 use pocketmine\utils\Config;
+use pocketmine\event\player\PlayerChatEvent;
 
 class RankUpDoesGroups implements Listener {
     /**
@@ -110,7 +111,17 @@ class RankUpDoesGroups implements Listener {
         return false;
     }
 
-
+/**
+     * @param PlayerChatEvent $event
+     * @priority HIGHEST
+     */
+    public function onChat(PlayerChatEvent $event)
+    {
+        $format = $event->getFormat();
+        $newformat= str_replace("{mine}", $this->getPlayerGroup($event->getPlayer()), $format);
+        $event->setFormat($newformat);
+    }
+    
     /**
      * @param $name
      * @return bool|mixed|Group
