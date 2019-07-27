@@ -5,7 +5,7 @@ author: Falkirks
 api: [3.0.0]
 load: POSTWORLD
 softdepend: ["EconomyAPI", "PocketMoney", "PurePerms"]
-permissions:
+permissions
  rankup:
   default: true
   children:
