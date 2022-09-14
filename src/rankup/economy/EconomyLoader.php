@@ -23,7 +23,7 @@ class EconomyLoader
             $name = $this->plugin->getConfig()->get('preferred-economy');
             try {
                 $econ = new $name($this->plugin);
-                if ($econ instanceof BaseEconomy) {
+                if ($econ instanceof Economy) {
                     if ($econ->isReady()) {
                         $this->plugin->setEconomy($econ);
                         $this->plugin->getLogger()->info("Loaded " . $econ->getName());
@@ -44,16 +44,6 @@ class EconomyLoader
                 $this->plugin->getLogger()->info("Loaded " . $econ->getName());
                 return;
             }
-            /*
-             * Try loading PocketMoney
-             */
-            $econ = new PocketMoney($this->plugin);
-            if ($econ->isReady()) {
-                $this->plugin->setEconomy($econ);
-                $this->plugin->getLogger()->info("Loaded " . $econ->getName());
-                return;
-            }
-            $this->plugin->getLogger()->critical("No economy found, an economy is not required but certain features will be unavailable.");
         }
     }
 }

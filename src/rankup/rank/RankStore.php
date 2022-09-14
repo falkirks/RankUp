@@ -2,7 +2,7 @@
 
 namespace rankup\rank;
 
-use pocketmine\Player;
+use pocketmine\player\Player;
 use rankup\RankUp;
 
 class RankStore

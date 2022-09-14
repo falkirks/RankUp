@@ -4,12 +4,11 @@ namespace rankup\command;
 
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
-use pocketmine\command\PluginIdentifiableCommand;
-use pocketmine\Player;
+use pocketmine\player\Player;
 use pocketmine\plugin\Plugin;
 use rankup\RankUp;
 
-class RankUpCommand extends Command implements PluginIdentifiableCommand
+class RankUpCommand extends Command
 {
     private $main;
 

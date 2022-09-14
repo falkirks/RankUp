@@ -2,7 +2,7 @@
 
 namespace rankup\permission;
 
-use pocketmine\Player;
+use pocketmine\player\Player;
 use rankup\RankUp;
 
 abstract class BasePermissionManager
