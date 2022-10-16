@@ -31,7 +31,7 @@ class RankUp extends PluginBase
     /** @var  RankUpCommand */
     private $rankupCommand;
 
-    public function onEnable()
+    public function onEnable() : void
     {
         $this->saveDefaultConfig();
         $this->languageConfig = new LanguageConfig($this->getConfig());
